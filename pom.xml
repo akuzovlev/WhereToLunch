@@ -7,6 +7,30 @@
     <groupId>WhereToLunch</groupId>
     <artifactId>WhereToLunch</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <packaging>war</packaging>
+    <name>Where to lunch</name>
 
+    <properties>
+        <jdk.version>1.8</jdk.version>
+        <servletapi.version>2.5</servletapi.version>
+        <mvc.version>5.0.4.RELEASE</mvc.version>
+    </properties>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+            <version>${mvc.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>servlet-api</artifactId>
+            <version>${servletapi.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+    </dependencies>
 
 </project>
