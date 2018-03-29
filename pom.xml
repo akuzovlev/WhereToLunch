@@ -7,6 +7,18 @@
     <groupId>WhereToLunch</groupId>
     <artifactId>WhereToLunch</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
     <packaging>war</packaging>
     <name>Where to lunch</name>
 
@@ -14,6 +26,7 @@
         <jdk.version>1.8</jdk.version>
         <servletapi.version>2.5</servletapi.version>
         <mvc.version>5.0.4.RELEASE</mvc.version>
+        <hibernate.version>5.2.16.Final</hibernate.version>
     </properties>
 
     <dependencies>
@@ -29,6 +42,12 @@
             <artifactId>servlet-api</artifactId>
             <version>${servletapi.version}</version>
             <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>${hibernate.version}</version>
         </dependency>
 
     </dependencies>

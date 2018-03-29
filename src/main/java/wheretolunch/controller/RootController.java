@@ -12,8 +12,9 @@ public class RootController extends AbstractController {
     protected ModelAndView handleRequestInternal(HttpServletRequest request,
                                                  HttpServletResponse response) throws Exception {
 
-        ModelAndView model = new ModelAndView("login");
+        ModelAndView model = new ModelAndView("voting");
 
         return model;
     }
 }
+
