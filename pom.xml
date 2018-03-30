@@ -27,6 +27,7 @@
         <servletapi.version>2.5</servletapi.version>
         <mvc.version>5.0.4.RELEASE</mvc.version>
         <hibernate.version>5.2.16.Final</hibernate.version>
+        <postgresql.version>42.2.2</postgresql.version>
     </properties>
 
     <dependencies>
@@ -44,10 +45,33 @@
             <scope>provided</scope>
         </dependency>
 
+<!--        будем использовать JPA EntityManagerFactory как более универсальную альтернативу Hibernate SessionFactory
+        http://stackoverflow.com/questions/23445830/hibernate-sessionfactory-vs-entitymanagerfactory#answer-23446379-->
         <dependency>
             <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-core</artifactId>
+            <artifactId>hibernate-entitymanager</artifactId>
             <version>${hibernate.version}</version>
+        </dependency>
+
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-orm</artifactId>
+            <version>5.0.2.RELEASE</version>
+        </dependency>
+
+       <!-- Подключаем пул коннектов Tomcat JDBC Connection Pooling-->
+        <dependency>
+            <groupId>org.apache.tomcat</groupId>
+            <artifactId>tomcat-dbcp</artifactId>
+            <version>9.0.1</version>
+        </dependency>
+
+        <!-- Драйвер Postgres должен быть в сборке-->
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>${postgresql.version}</version>
         </dependency>
 
     </dependencies>

@@ -4,6 +4,7 @@ import java.util.List;
 
 public class Restaurant extends BaseEntity {
 
-private List<Dish> dishes;
+    String name;
+    private List<Dish> dishes;
 
 }

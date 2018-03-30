@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
-       xmlns:context="http://www.springframework.org/schema/context" xmlns:p="http://www.springframework.org/schema/p" xmlns:tx="http://www.springframework.org/schema/tx"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+       xmlns:context="http://www.springframework.org/schema/context" xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:tx="http://www.springframework.org/schema/tx" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd">
 
     <context:component-scan base-package="wheretolunch.model**" />
 
@@ -14,12 +15,51 @@
             <property name="suffix" value=".jsp"/>
         </bean>
 
-    <tx:annotation-driven/>
 
-    <context:property-placeholder location="classpath:/postgres.properties" system-properties-mode="OVERRIDE"/>
+    <context:annotation-config />
+
+    <mvc:annotation-driven />
+
+
+    <jdbc:initialize-database data-source="dataSource" enabled="${database.init}">
+        <jdbc:script location="classpath:/${jdbc.initLocation}"/>
+        <jdbc:script encoding="utf-8" location="classpath:/populateDB.sql"/>
+    </jdbc:initialize-database>
+
+
+      <context:property-placeholder location="classpath:/postgres.properties" system-properties-mode="OVERRIDE"/>
 
     <bean id="dataSource"
+          class="org.apache.tomcat.dbcp.dbcp2.BasicDataSource"
+          p:driverClassName="org.postgresql.Driver"
+          p:url="${database.url}"
+          p:username="${database.username}"
+          p:password="${database.password}"/>
 
 
+    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"
+          p:dataSource-ref="dataSource"
+          p:packagesToScan="ru.javawebinar.**.model">
+
+        <property name="jpaPropertyMap">
+            <map>
+                <entry key="#{T(org.hibernate.cfg.AvailableSettings).FORMAT_SQL}" value="${hibernate.format_sql}"/>
+                <entry key="#{T(org.hibernate.cfg.AvailableSettings).USE_SQL_COMMENTS}"
+                       value="${hibernate.use_sql_comments}"/>
+                <entry key="#{T(org.hibernate.cfg.AvailableSettings).DIALECT}" value="${jpa.database-platform}"/>
+            </map>
+        </property>
+
+        <property name="jpaVendorAdapter">
+            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"
+                  p:showSql="${jpa.showSql}">
+            </bean>
+        </property>
+    </bean>
+
+    <!-- Transaction manager for a single JPA EntityManagerFactory (alternative to JTA) -->
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager"
+          p:entityManagerFactory-ref="entityManagerFactory"/>
 
 </beans>
+
