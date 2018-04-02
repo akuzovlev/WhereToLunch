@@ -1,6 +1,5 @@
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS dishes;
-DROP TABLE IF EXISTS restaurants;
 DROP SEQUENCE IF EXISTS global_seq;
 
 CREATE SEQUENCE global_seq
@@ -18,15 +17,9 @@ CREATE TABLE users
 CREATE UNIQUE INDEX users_unique_email_idx
   ON users (email);
 
-CREATE TABLE restaurants (
-  id INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
-  name     VARCHAR                 NOT NULL
-);
-
 CREATE TABLE dishes (
   id            INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
-  restaurant_id INTEGER   NOT NULL,
+  restaurantName TEXT   NOT NULL,
   description   TEXT      NOT NULL,
-  price      FLOAT       NOT NULL,
-  FOREIGN KEY (restaurant_id) REFERENCES restaurants (id) ON DELETE CASCADE
+  price      FLOAT       NOT NULL
 );
