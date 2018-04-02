@@ -27,6 +27,13 @@ public class User extends BaseEntity {
     public User() {
     }
 
+    public User(String email, String name, String password) {
+        this.email = email;
+        this.name = name;
+        this.password = password;
+        this.admin = false;
+    }
+
     public boolean isAdmin() {
         return admin;
     }
