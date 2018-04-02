@@ -1,16 +1,17 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: kuzovlea
-  Date: 29.03.2018
-  Time: 12:03
-  To change this template use File | Settings | File Templates.
---%>
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <html>
 <head>
     <title>Voting</title>
 </head>
 <body>
+
+<jsp:useBean id="dish" scope="page" type="wheretolunch.model.Dish"/>
+<c:forEach items="${dish}" var="dish">
+
+</c:forEach>
 
 Restaurant name   <button value = "vote">Vote</button>
 <table cellspacing="10">

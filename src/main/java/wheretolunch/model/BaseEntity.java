@@ -8,5 +8,13 @@ public abstract class BaseEntity {
     @Id
     @Column(name = "id")
     @GeneratedValue
-    private int id;
+    private Integer id;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 }
