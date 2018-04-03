@@ -8,10 +8,10 @@
 </head>
 <body>
 
-<jsp:useBean id="dish" scope="page" type="wheretolunch.model.Dish"/>
+<%--<jsp:useBean id="dish" scope="page" type="wheretolunch.model.Dish"/>
 <c:forEach items="${dish}" var="dish">
 
-</c:forEach>
+</c:forEach>--%>
 
 Restaurant name   <button value = "vote">Vote</button>
 <table cellspacing="10">

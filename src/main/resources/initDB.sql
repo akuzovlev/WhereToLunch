@@ -11,7 +11,7 @@ CREATE TABLE users
   name     VARCHAR                 NOT NULL,
   email    VARCHAR                 NOT NULL,
   password VARCHAR                 NOT NULL,
-  voteTime TIMESTAMP               ,
+  votetime TIMESTAMP               ,
   admin    BOOL DEFAULT FALSE       NOT NULL
 );
 CREATE UNIQUE INDEX users_unique_email_idx

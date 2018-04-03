@@ -1,9 +1,8 @@
 package wheretolunch.model;
 
-import javax.persistence.Entity;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
+import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 
 @NamedQueries({
@@ -17,10 +16,23 @@ public class User extends BaseEntity {
     public static final String DELETE = "User.delete";
     public static final String ALL_SORTED = "User.getAllSorted";
 
+    @Column(name = "admin", nullable = false)
     private boolean admin;
+
+    @Column(name = "email", nullable = false, unique = true)
+    @Email
+    @NotBlank
     private String email;
+
+    @Column(name = "name", nullable = false)
+    @NotBlank
     private String name;
+
+    @Column(name = "password", nullable = false)
+    @NotBlank
     private String password;
+
+    @Column(name = "votetime", nullable = false)
     private LocalDateTime voteTime;
 
 
