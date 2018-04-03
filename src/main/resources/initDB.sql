@@ -17,9 +17,16 @@ CREATE TABLE users
 CREATE UNIQUE INDEX users_unique_email_idx
   ON users (email);
 
+CREATE TABLE restaurants (
+  id INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
+  name     VARCHAR                 NOT NULL,
+  votes   INTEGER
+);
+
 CREATE TABLE dishes (
   id            INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
-  restaurantName TEXT   NOT NULL,
+  restaurant_id INTEGER   NOT NULL,
   description   TEXT      NOT NULL,
-  price      FLOAT       NOT NULL
+  price      FLOAT       NOT NULL,
+  FOREIGN KEY (restaurant_id) REFERENCES restaurants (id) ON DELETE CASCADE
 );
