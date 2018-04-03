@@ -16,7 +16,7 @@ public class User extends BaseEntity {
     public static final String DELETE = "User.delete";
     public static final String ALL_SORTED = "User.getAllSorted";
 
-    @Column(name = "admin", nullable = false)
+    @Column(name = "admin")
     private boolean admin;
 
     @Column(name = "email", nullable = false, unique = true)
@@ -32,7 +32,7 @@ public class User extends BaseEntity {
     @NotBlank
     private String password;
 
-    @Column(name = "votetime", nullable = false)
+    @Column(name = "votetime")
     private LocalDateTime voteTime;
 
 

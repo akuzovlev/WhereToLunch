@@ -15,6 +15,7 @@ public class UserRepositoryImpl implements UserRepository{
     @PersistenceContext
     private EntityManager em;
 
+    @Transactional
     public User save(User user) {
         if (user.getId() == null) {
             em.persist(user);
