@@ -12,6 +12,13 @@ public abstract class BaseEntity {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "global_seq")
     private Integer id;
 
+    protected BaseEntity() {
+    }
+
+    protected BaseEntity(Integer id) {
+        this.id = id;
+    }
+
     public Integer getId() {
         return id;
     }

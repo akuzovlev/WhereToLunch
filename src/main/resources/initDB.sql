@@ -1,5 +1,6 @@
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS dishes;
+DROP TABLE IF EXISTS restaurants;
 DROP SEQUENCE IF EXISTS global_seq;
 
 CREATE SEQUENCE global_seq
@@ -20,7 +21,7 @@ CREATE UNIQUE INDEX users_unique_email_idx
 CREATE TABLE restaurants (
   id INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
   name     VARCHAR                 NOT NULL,
-  votes   INTEGER
+  votes   INTEGER DEFAULT 0
 );
 
 CREATE TABLE dishes (

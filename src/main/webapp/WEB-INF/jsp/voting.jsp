@@ -1,4 +1,3 @@
-
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
@@ -8,35 +7,21 @@
 </head>
 <body>
 
-<%--<jsp:useBean id="dish" scope="page" type="wheretolunch.model.Dish"/>
-<c:forEach items="${dish}" var="dish">
 
-</c:forEach>--%>
+<c:forEach items="${restaurants}" var="restaurant">
+    <jsp:useBean id="restaurant" scope="page" type="wheretolunch.model.Restaurant"/>
+    ${restaurant.name} <br> <button value = "vote">Vote</button> <br>
+    <table cellspacing="10">
 
-Restaurant name   <button value = "vote">Vote</button>
-<table cellspacing="10">
-    <tr>
-        <td>Fresh melon fruit salad</td>
-        <td>2.30 $</td>
-    </tr>
-    <tr>
-        <td>Zucchini light soup</td>
-        <td>5.14 $</td>
-    </tr>
-    <tr>
-        <td>Asparagus frittata</td>
-        <td>7.14 $</td>
-    </tr>
-    <tr>
-        <td>Baked apple</td>
-        <td>1.04 $</td>
-    </tr>
-    <tr>
-        <td>Green tea</td>
-        <td>0.60 $</td>
-    </tr>
-
-</table>
+    <c:forEach items="${restaurant.dishes}" var="dish">
+        <jsp:useBean id="dish" scope="page" type="wheretolunch.model.Dish"/>
+        <tr>
+                <td>${dish.description}</td>
+                <td>${dish.price}</td>
+        </tr>
+    </c:forEach>
+    </table>
+</c:forEach>
 
 </body>
 </html>

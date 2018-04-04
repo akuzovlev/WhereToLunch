@@ -11,32 +11,32 @@ import java.util.List;
 
 @Repository
 @Transactional(readOnly = true)
-public class DishRepositoryImpl implements DishRepository{
+public class DishRepositoryImpl implements DishRepository {
 
     @PersistenceContext
     private EntityManager em;
 
 
-    public DishRepositoryImpl() {
-    }
-
     @Override
-    public Dish save(Dish user) {
-        return null;
-    }
-
-    @Override
-    public boolean delete(Integer id) {
-        return false;
+    public Dish save(Dish dish) {
+        if (dish.getId() == null) {
+            em.persist(dish);
+            return dish;
+        } else {
+            return em.merge(dish);
+        }
     }
 
     @Override
     public Dish get(Integer id) {
-        return null;
+        return em.find(Dish.class, id);
     }
 
     @Override
-    public List<Dish> getAll() {
-        return null;
+    public boolean delete(Integer id) {
+        return em.createNamedQuery(Dish.DELETE)
+                .setParameter("id", id)
+                .executeUpdate() != 0;
     }
+
 }

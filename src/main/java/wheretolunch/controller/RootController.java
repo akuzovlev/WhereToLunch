@@ -2,45 +2,32 @@ package wheretolunch.controller;
 
         import org.springframework.beans.factory.annotation.Autowired;
         import org.springframework.context.support.GenericXmlApplicationContext;
-        import wheretolunch.service.DishService;
+        import org.springframework.stereotype.Controller;
+        import org.springframework.ui.Model;
+        import org.springframework.web.bind.annotation.GetMapping;
+        import org.springframework.web.bind.annotation.RequestParam;
+        import wheretolunch.service.RestaurantService;
 
         import javax.servlet.ServletConfig;
         import javax.servlet.ServletException;
         import javax.servlet.http.HttpServlet;
         import javax.servlet.http.HttpServletRequest;
         import javax.servlet.http.HttpServletResponse;
+        import javax.validation.constraints.Null;
         import java.io.IOException;
 
+@Controller
 public class RootController extends HttpServlet {
 
     private GenericXmlApplicationContext springContext;
-    private DishService dishService;
 
     @Autowired
-    public RootController(DishService service) {
-        this.dishService = service;
-    }
+    private RestaurantService restaurantService;
 
-    @Override
-    public void init(ServletConfig config) throws ServletException {
-        super.init(config);
-        springContext = new GenericXmlApplicationContext();
-        springContext.load("classpath:spring/*.xml");
-        springContext.refresh();
-        dishService = springContext.getBean(DishService.class);
-    }
-
-    @Override
-    public void destroy() {
-        springContext.close();
-        super.destroy();
-    }
-
-
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setAttribute("restaurants", dishService.getAllRestaurants());
-        request.getRequestDispatcher("/voting.jsp").forward(request, response);
+    @GetMapping("/")
+    public String root(@RequestParam(name="restaurants", required=false, defaultValue="") String name, Model model) {
+        model.addAttribute("restaurants", restaurantService.getAll());
+        return "voting";
     }
 
 

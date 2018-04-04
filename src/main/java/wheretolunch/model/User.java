@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 
 @NamedQueries({
         @NamedQuery(name = User.DELETE, query = "DELETE FROM User u WHERE u.id=:id"),
-        @NamedQuery(name = User.ALL_SORTED, query = "SELECT u FROM User u ORDER BY u.name"),
+        @NamedQuery(name = User.ALL_SORTED, query = "SELECT u FROM User u ORDER BY u.name")
 })
 @Entity
 @Table(name = "users")
@@ -44,6 +44,14 @@ public class User extends BaseEntity {
         this.name = name;
         this.password = password;
         this.admin = false;
+    }
+
+    public User(Integer id, String email, String name, String password) {
+        super(id);
+        this.admin = admin;
+        this.email = email;
+        this.name = name;
+        this.password = password;
     }
 
     public boolean isAdmin() {

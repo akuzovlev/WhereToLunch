@@ -5,15 +5,13 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 
 @NamedQueries({
-        @NamedQuery(name = Dish.DELETE, query = "DELETE FROM Dish d WHERE d.id=:id"),
-        @NamedQuery(name = Dish.ALL_SORTED, query = "SELECT d FROM Dish d ORDER BY d.restaurantName"),
+        @NamedQuery(name = Dish.DELETE, query = "DELETE FROM Dish d WHERE d.id=:id")
 })
 @Entity
 @Table(name = "dishes")
 public class Dish extends BaseEntity {
 
     public static final String DELETE = "Dish.delete";
-    public static final String ALL_SORTED = "Dish.getAllSorted";
 
     @Column(name = "description", nullable = false)
     @NotBlank
@@ -23,11 +21,18 @@ public class Dish extends BaseEntity {
     @NotBlank
     private double price;
 
-    @Column(name = "restaurantName", nullable = false)
+    @Column(name = "restaurant_id", nullable = false)
     @NotBlank
-    private String restaurantName;
+    private Integer restaurantId;
+
 
     public Dish() {
+    }
+
+    public Dish(String description, double price, Integer restaurantId) {
+        this.description = description;
+        this.price = price;
+        this.restaurantId = restaurantId;
     }
 
     public String getDescription() {
@@ -46,11 +51,4 @@ public class Dish extends BaseEntity {
         this.price = price;
     }
 
-    public String getRestaurantName() {
-        return restaurantName;
-    }
-
-    public void setRestaurantName(String restaurantName) {
-        this.restaurantName = restaurantName;
-    }
 }

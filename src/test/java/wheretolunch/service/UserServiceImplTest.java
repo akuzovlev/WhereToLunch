@@ -6,8 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import wheretolunch.model.User;
+import static org.assertj.core.api.Assertions.assertThat;
 
-import javax.swing.*;
+import static wheretolunch.UserTestData.USER;
+import static wheretolunch.UserTestData.USER_ID;
 
 
 @ContextConfiguration({"classpath:spring/spring-mvc.xml"})
@@ -24,19 +26,21 @@ public class UserServiceImplTest {
         newUser.setId(created.getId());
     }
 
-    @org.junit.Test
+    @Test
     public void delete() {
     }
 
-    @org.junit.Test
-    public void get() {
+    @Test
+    public void get() throws Exception{
+        User user = service.get(USER_ID);
+        assertThat(user).isEqualToIgnoringGivenFields(USER);
     }
 
-    @org.junit.Test
+    @Test
     public void getAll() {
     }
 
-    @org.junit.Test
+    @Test
     public void update() {
     }
 }

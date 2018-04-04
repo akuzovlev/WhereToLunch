@@ -15,6 +15,7 @@ public class UserRepositoryImpl implements UserRepository{
     @PersistenceContext
     private EntityManager em;
 
+    @Override
     @Transactional
     public User save(User user) {
         if (user.getId() == null) {
@@ -25,14 +26,18 @@ public class UserRepositoryImpl implements UserRepository{
         }
     }
 
+    @Override
     public User get(Integer id) {
         return em.find(User.class, id);
     }
 
+    @Override
     public List<User> getAll() {
         return em.createNamedQuery(User.ALL_SORTED, User.class).getResultList();
     }
 
+    @Override
+    @Transactional
     public boolean delete(Integer id) {
         return em.createNamedQuery(User.DELETE)
                 .setParameter("id", id)
