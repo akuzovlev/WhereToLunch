@@ -7,11 +7,12 @@
 </head>
 <body>
 
+<button value = "add" style="margin: 10px">Add restaurant</button> <br>
 
 <c:forEach items="${restaurants}" var="restaurant">
     <jsp:useBean id="restaurant" scope="page" type="wheretolunch.model.Restaurant"/>
-    ${restaurant.name} <br> <button value = "vote">Vote</button> <br>
-    <table cellspacing="10">
+    ${restaurant.name} <button value = "vote" style="margin: 10px">Vote</button> <button value = "edit" style="margin: 10px">Edit menu</button><br>
+    <table cellpadding="10" border="1">
 
     <c:forEach items="${restaurant.dishes}" var="dish">
         <jsp:useBean id="dish" scope="page" type="wheretolunch.model.Dish"/>
@@ -20,7 +21,7 @@
                 <td>${dish.price}</td>
         </tr>
     </c:forEach>
-    </table>
+    </table> <br>
 </c:forEach>
 
 </body>

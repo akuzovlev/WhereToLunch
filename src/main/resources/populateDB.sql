@@ -3,9 +3,9 @@ DELETE FROM dishes;
 DELETE FROM restaurants;
 ALTER SEQUENCE global_seq RESTART WITH 1000;
 
-INSERT INTO users (name, email, password) VALUES
-  ('User', 'user@yandex.ru', 'password'),
-  ('Admin', 'admin@gmail.com', 'admin');
+INSERT INTO users (name, email, password,admin) VALUES
+  ('User', 'user@yandex.ru', 'password',FALSE ),
+  ('Admin', 'admin@gmail.com', 'admin',TRUE );
 
 INSERT INTO restaurants (name) VALUES
   ('Cafe Pushkin'),

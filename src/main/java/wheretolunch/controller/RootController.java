@@ -1,26 +1,28 @@
 package wheretolunch.controller;
 
-        import org.springframework.beans.factory.annotation.Autowired;
-        import org.springframework.context.support.GenericXmlApplicationContext;
-        import org.springframework.stereotype.Controller;
-        import org.springframework.ui.Model;
-        import org.springframework.web.bind.annotation.GetMapping;
-        import org.springframework.web.bind.annotation.RequestParam;
-        import wheretolunch.service.RestaurantService;
-        import wheretolunch.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.support.GenericXmlApplicationContext;
+import org.springframework.http.MediaType;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
+import wheretolunch.model.Restaurant;
+import wheretolunch.model.User;
+import wheretolunch.service.RestaurantService;
+import wheretolunch.service.UserService;
 
-        import javax.servlet.ServletConfig;
-        import javax.servlet.ServletException;
-        import javax.servlet.http.HttpServlet;
-        import javax.servlet.http.HttpServletRequest;
-        import javax.servlet.http.HttpServletResponse;
-        import javax.validation.constraints.Null;
-        import java.io.IOException;
+import javax.servlet.http.HttpServlet;
+import java.util.List;
 
-@Controller
+
+@RestController
+@RequestMapping(value = RootController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 public class RootController extends HttpServlet {
 
-    private GenericXmlApplicationContext springContext;
+    static final String REST_URL = "/";
 
     @Autowired
     private RestaurantService restaurantService;
@@ -28,18 +30,15 @@ public class RootController extends HttpServlet {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/")
-    public String root(Model model) {
-        model.addAttribute("restaurants", restaurantService.getAll());
-        return "voting";
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<Restaurant> root() {
+        return restaurantService.getAll();
     }
 
-    @GetMapping("/users")
-    public String users(Model model) {
-        model.addAttribute("users", userService.getAll());
-        return "users";
+    @GetMapping("users")
+    public List<User> users() {
+        return userService.getAll();
     }
-
 
 }
 
