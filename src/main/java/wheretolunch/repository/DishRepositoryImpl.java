@@ -18,6 +18,7 @@ public class DishRepositoryImpl implements DishRepository {
 
 
     @Override
+    @Transactional
     public Dish save(Dish dish) {
         if (dish.getId() == null) {
             em.persist(dish);
@@ -33,6 +34,7 @@ public class DishRepositoryImpl implements DishRepository {
     }
 
     @Override
+    @Transactional
     public boolean delete(Integer id) {
         return em.createNamedQuery(Dish.DELETE)
                 .setParameter("id", id)

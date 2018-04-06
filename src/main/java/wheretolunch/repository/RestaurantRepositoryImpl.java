@@ -17,6 +17,7 @@ public class RestaurantRepositoryImpl implements RestaurantRepository {
     private EntityManager em;
 
     @Override
+    @Transactional
     public Restaurant save(Restaurant restaurant) {
         if (restaurant.getId() == null) {
             em.persist(restaurant);
@@ -32,6 +33,7 @@ public class RestaurantRepositoryImpl implements RestaurantRepository {
     }
 
     @Override
+    @Transactional
     public boolean delete(Integer id) {
         return em.createNamedQuery(Restaurant.DELETE)
                 .setParameter("id", id)
