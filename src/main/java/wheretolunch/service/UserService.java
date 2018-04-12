@@ -17,7 +17,7 @@ public interface UserService {
 
     List<User> getAll();
 
-    void vote(int userId, int id) throws NotFoundException;
+    void vote(int id) throws NotFoundException;
 
     User getByEmail(String email) throws NotFoundException;
 }

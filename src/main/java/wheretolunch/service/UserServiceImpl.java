@@ -2,6 +2,7 @@ package wheretolunch.service;
 
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -11,11 +12,8 @@ import wheretolunch.model.User;
 import wheretolunch.model.UserPrincipal;
 import wheretolunch.repository.UserRepository;
 
-import java.util.Arrays;
+import java.time.LocalDateTime;
 import java.util.List;
-
-import static wheretolunch.model.Role.ROLE_ADMIN;
-import static wheretolunch.model.Role.ROLE_USER;
 
 @Service("userService")
 public class UserServiceImpl implements UserService, UserDetailsService {
@@ -57,9 +55,11 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public void vote(int userId, int id) throws NotFoundException {
-      /*  User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();*/
-        User currentUser = repository.get(userId);
+    public void vote(int id) throws NotFoundException {
+      UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+      User user = userPrincipal.getUser();
+      user.setVoteTime(LocalDateTime.now());
+      repository.save(user);
     }
 
     @Override
@@ -69,10 +69,10 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = repository.getByEmail(username.toLowerCase());
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        User user = repository.getByEmail(email.toLowerCase());
         if (user == null) {
-            throw new UsernameNotFoundException("User " + username + " is not found");
+            throw new UsernameNotFoundException("User " + email + " is not found");
         }
 
         return new UserPrincipal(user);

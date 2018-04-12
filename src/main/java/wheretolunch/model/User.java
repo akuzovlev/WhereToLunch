@@ -50,7 +50,7 @@ public class User extends BaseEntity {
 
     public User(Integer id, String email, String name, String password) {
         super(id);
-        this.admin = admin;
+        this.admin = false;
         this.email = email;
         this.name = name;
         this.password = password;
