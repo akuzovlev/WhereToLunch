@@ -11,7 +11,7 @@
 
 <c:forEach items="${restaurants}" var="restaurant">
     <jsp:useBean id="restaurant" scope="page" type="wheretolunch.model.Restaurant"/>
-    ${restaurant.name} <button value = "vote" style="margin: 10px">Vote</button> <button value = "edit" style="margin: 10px">Edit menu</button><br>
+    ${restaurant.name} <button value = "vote" style="margin: 10px">Vote</button> <button onclick="window.location.href='/editMenu?id=${restaurant.id}'" value = "edit" style="margin: 10px">Edit menu</button><br>
     <table cellpadding="10" border="1">
 
     <c:forEach items="${restaurant.dishes}" var="dish">

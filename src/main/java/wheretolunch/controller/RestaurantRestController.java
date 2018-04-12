@@ -46,7 +46,7 @@ public class RestaurantRestController extends HttpServlet {
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Restaurant> createWithLocation(@RequestBody Restaurant restaurant) {
+    public ResponseEntity<Restaurant> create(@RequestBody Restaurant restaurant) {
         Restaurant created = restaurantService.create(restaurant);
 
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
@@ -55,6 +55,5 @@ public class RestaurantRestController extends HttpServlet {
 
         return ResponseEntity.created(uriOfNewResource).body(created);
     }
-
 
 }

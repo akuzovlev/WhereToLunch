@@ -7,7 +7,8 @@ import java.time.LocalDateTime;
 
 @NamedQueries({
         @NamedQuery(name = User.DELETE, query = "DELETE FROM User u WHERE u.id=:id"),
-        @NamedQuery(name = User.ALL_SORTED, query = "SELECT u FROM User u ORDER BY u.name")
+        @NamedQuery(name = User.ALL_SORTED, query = "SELECT u FROM User u ORDER BY u.name"),
+        @NamedQuery(name = User.BY_EMAIL, query = "SELECT DISTINCT u FROM User u WHERE u.email=?1")
 })
 @Entity
 @Table(name = "users")
@@ -15,6 +16,7 @@ public class User extends BaseEntity {
 
     public static final String DELETE = "User.delete";
     public static final String ALL_SORTED = "User.getAllSorted";
+    public static final String BY_EMAIL = "User.getByEmail";
 
     @Column(name = "admin")
     private boolean admin;

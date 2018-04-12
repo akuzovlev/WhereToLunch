@@ -1,7 +1,7 @@
 package wheretolunch.controller;
 
+import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.support.GenericXmlApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,6 +9,7 @@ import wheretolunch.service.RestaurantService;
 import wheretolunch.service.UserService;
 
 import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
 
 
 @Controller
@@ -26,11 +27,22 @@ public class RootController extends HttpServlet {
         return "voting";
     }
 
-/*    @GetMapping("/users")
+    @GetMapping("/users")
     public String users(Model model) {
         model.addAttribute("users", userService.getAll());
         return "users";
-    }*/
+    }
+
+    @GetMapping("/editMenu")
+    public String edit(Model model, HttpServletRequest request) throws NotFoundException {
+        model.addAttribute("users", restaurantService.get(Integer.parseInt(request.getParameter("id"))));
+        return "editMenu";
+    }
+
+    @GetMapping(value = "/login")
+    public String login() {
+        return "login";
+    }
 
 }
 

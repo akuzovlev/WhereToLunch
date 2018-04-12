@@ -1,10 +1,9 @@
 package wheretolunch.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import wheretolunch.model.User;
 import wheretolunch.service.UserService;
 
@@ -24,5 +23,15 @@ public class UserRestController extends HttpServlet {
     public List<User> users() {
         return userService.getAll();
     }
+
+
+
+
+
+/*    @PutMapping(value = "/vote/{id}")
+    @ResponseStatus(value = HttpStatus.NO_CONTENT)
+    public void vote(@PathVariable("id") int id) {
+        super.vote(userId,id);
+    }*/
 
 }

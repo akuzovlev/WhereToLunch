@@ -3,6 +3,7 @@ package wheretolunch.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @NamedQueries({
@@ -21,7 +22,7 @@ public class Restaurant extends BaseEntity {
     private String name;
 
     @Column(name = "votes", nullable = false)
-    @NotBlank
+    @NotNull
     private Integer votes;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy="restaurantId")

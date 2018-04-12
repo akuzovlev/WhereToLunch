@@ -1,5 +1,7 @@
 package wheretolunch.repository;
 
+import org.hibernate.jpa.QueryHints;
+import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import wheretolunch.model.User;
@@ -37,12 +39,22 @@ public class UserRepositoryImpl implements UserRepository{
     }
 
     @Override
+    public User getByEmail(String email) {
+        List<User> users = em.createNamedQuery(User.BY_EMAIL, User.class)
+                .setParameter(1, email)
+                .setHint(QueryHints.HINT_PASS_DISTINCT_THROUGH, false)
+                .getResultList();
+        return DataAccessUtils.singleResult(users);
+    }
+
+    @Override
     @Transactional
     public boolean delete(Integer id) {
         return em.createNamedQuery(User.DELETE)
                 .setParameter("id", id)
                 .executeUpdate() != 0;
     }
+
 
 
 }

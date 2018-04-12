@@ -21,4 +21,8 @@ Get:
 Delete:
 /restaurants/{id} - delete by restaurant id
 
+Update:
+/restaurants/{id} - consumes JSON, updates restaurant by id
 
+Save:
+/restaurants/consumes JSON, creates restaurant

@@ -3,6 +3,7 @@ package wheretolunch.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @NamedQueries({
         @NamedQuery(name = Dish.DELETE, query = "DELETE FROM Dish d WHERE d.id=:id")
@@ -18,11 +19,11 @@ public class Dish extends BaseEntity {
     private String description;
 
     @Column(name = "price", nullable = false)
-    @NotBlank
+    @NotNull
     private double price;
 
     @Column(name = "restaurant_id", nullable = false)
-    @NotBlank
+    @NotNull
     private Integer restaurantId;
 
 
