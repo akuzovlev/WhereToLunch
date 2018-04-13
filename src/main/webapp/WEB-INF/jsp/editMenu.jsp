@@ -6,6 +6,9 @@
 </head>
 <body>
 
+${restaurant.name}
+
+
 
 
 </body>

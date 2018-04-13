@@ -37,6 +37,8 @@ public class User extends BaseEntity {
     @Column(name = "votetime")
     private LocalDateTime voteTime;
 
+    @Column(name = "voterestaurantid")
+    private Integer voteRestaurantId;
 
     public User() {
     }
@@ -94,5 +96,13 @@ public class User extends BaseEntity {
 
     public void setVoteTime(LocalDateTime voteTime) {
         this.voteTime = voteTime;
+    }
+
+    public Integer getVoteRestaurantId() {
+        return voteRestaurantId;
+    }
+
+    public void setVoteRestaurantId(Integer voteRestaurantId) {
+        this.voteRestaurantId = voteRestaurantId;
     }
 }

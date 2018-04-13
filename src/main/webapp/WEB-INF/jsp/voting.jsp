@@ -7,11 +7,16 @@
 </head>
 <body>
 
-<button value = "add" style="margin: 10px">Add restaurant</button> <br>
+<button onclick="window.location.href='/editMenu?id=0'" value = "add" style="margin: 10px">Add restaurant</button> <br><br>
 
 <c:forEach items="${restaurants}" var="restaurant">
     <jsp:useBean id="restaurant" scope="page" type="wheretolunch.model.Restaurant"/>
-    ${restaurant.name} <button value = "vote" style="margin: 10px">Vote</button> <button onclick="window.location.href='/editMenu?id=${restaurant.id}'" value = "edit" style="margin: 10px">Edit menu</button><br>
+
+    ${restaurant.name}
+    <form action="/vote/${restaurant.id}" method="post" style="display: inline-block;}">
+        <button type="submit" style="margin: 10px">Vote</button>
+    </form>
+     <button onclick="window.location.href='/editMenu?id=${restaurant.id}'" value = "edit" style="margin: 10px">Edit menu</button><br>
     <table cellpadding="10" border="1">
 
     <c:forEach items="${restaurant.dishes}" var="dish">

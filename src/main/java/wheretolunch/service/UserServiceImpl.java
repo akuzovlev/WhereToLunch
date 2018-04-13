@@ -12,7 +12,9 @@ import wheretolunch.model.User;
 import wheretolunch.model.UserPrincipal;
 import wheretolunch.repository.UserRepository;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 @Service("userService")
@@ -55,11 +57,20 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public void vote(int id) throws NotFoundException {
+    public boolean vote(int id) throws NotFoundException {
       UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
       User user = userPrincipal.getUser();
-      user.setVoteTime(LocalDateTime.now());
-      repository.save(user);
+      LocalDate today = LocalDate.now();
+      LocalTime eleven = LocalTime.of(11, 0);
+      if (user.getVoteTime() == null || !user.getVoteTime().isAfter(LocalDateTime.of(today,eleven))) {
+          user.setVoteTime(LocalDateTime.now());
+          user.setVoteRestaurantId(id);
+          repository.save(user);
+          return true;
+      } else {
+          return false;
+      }
+
     }
 
     @Override

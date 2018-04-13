@@ -5,10 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.*;
 import wheretolunch.model.Restaurant;
 import wheretolunch.service.RestaurantService;
 import wheretolunch.service.UserService;
@@ -40,7 +37,7 @@ public class RootController extends HttpServlet {
 
     @GetMapping("/editMenu")
     public String edit(Model model, HttpServletRequest request) throws NotFoundException {
-        model.addAttribute("users", restaurantService.get(Integer.parseInt(request.getParameter("id"))));
+        model.addAttribute("restaurant", restaurantService.get(Integer.parseInt(request.getParameter("id"))));
         return "editMenu";
     }
 
@@ -49,13 +46,17 @@ public class RootController extends HttpServlet {
         return "login";
     }
 
-    @PutMapping(value = "/vote/{id}")
+    @PostMapping(value = "/vote/{id}")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    public void vote(@PathVariable("id") int id) throws NotFoundException {
-        userService.vote(id);
-        Restaurant restaurant = restaurantService.get(id);
-        restaurant.setVotes(restaurant.getVotes() + 1);
-        restaurantService.update(restaurant);
+    public String vote(@PathVariable("id") int id) throws NotFoundException {
+        if (userService.vote(id)) {
+            Restaurant restaurant = restaurantService.get(id);
+            restaurant.setVotes(restaurant.getVotes() + 1);
+            restaurantService.update(restaurant);
+            return "redirect:/";
+        } else {
+            return "voteError";
+        }
     }
 
 }
