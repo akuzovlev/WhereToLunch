@@ -46,6 +46,7 @@ public class RootController extends HttpServlet {
         return "login";
     }
 
+
     @PostMapping(value = "/vote/{id}")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public String vote(@PathVariable("id") int id) throws NotFoundException {
