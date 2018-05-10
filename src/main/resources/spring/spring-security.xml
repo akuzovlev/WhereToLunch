@@ -16,10 +16,12 @@
         <intercept-url pattern="/users/**" access="hasRole('ROLE_ADMIN')"/>
         <intercept-url pattern="/**" access="isAuthenticated()"/>
 
-        <form-login login-page="/login" default-target-url="/"
+      <!--  <form-login login-page="/login" default-target-url="/"
                     authentication-failure-url="/login?error=true"
                     login-processing-url="/spring_security_check"/>
-        <logout logout-success-url="/login"/>
+        <logout logout-success-url="/login"/>-->
+
+        <http-basic/>
 
         <csrf disabled="true"/>
     </http>

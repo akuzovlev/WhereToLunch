@@ -29,7 +29,7 @@ public class RootController extends HttpServlet {
         return "voting";
     }
 
-    @GetMapping("/users")
+    @GetMapping("/userslist")
     public String users(Model model) {
         model.addAttribute("users", userService.getAll());
         return "users";
