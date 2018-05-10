@@ -47,4 +47,9 @@ public class RestaurantServiceImpl implements RestaurantService {
     public List<Restaurant> getAll() {
         return repository.getAll();
     }
+
+    @Override
+    public Integer getVotesNumber(int id) {
+        return repository.get(id).getVotedUsers().size();
+    }
 }

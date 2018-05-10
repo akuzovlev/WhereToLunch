@@ -4,6 +4,12 @@
              xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 	http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
 
+    <!--Включаем аннотации security в контроллере-->
+    <global-method-security
+            jsr250-annotations="enabled"
+            pre-post-annotations="enabled"
+            secured-annotations="enabled"/>
+
     <!--Отключаем security для ресурсов-->
     <http pattern="/resources/**" security="none"/>
 
@@ -16,11 +22,12 @@
         <intercept-url pattern="/users/**" access="hasRole('ROLE_ADMIN')"/>
         <intercept-url pattern="/**" access="isAuthenticated()"/>
 
-      <!--  <form-login login-page="/login" default-target-url="/"
+        <form-login login-page="/login" default-target-url="/"
                     authentication-failure-url="/login?error=true"
                     login-processing-url="/spring_security_check"/>
-        <logout logout-success-url="/login"/>-->
+        <logout logout-success-url="/login"/>
 
+        <!--for tests-->
         <http-basic/>
 
         <csrf disabled="true"/>
@@ -39,5 +46,6 @@
 
         </authentication-provider>
     </authentication-manager>
+
 
 </beans:beans>

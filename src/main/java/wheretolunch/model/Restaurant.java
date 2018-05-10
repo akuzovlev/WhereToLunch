@@ -5,10 +5,11 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.List;
+import java.util.Set;
 
 @NamedQueries({
         @NamedQuery(name = Restaurant.DELETE, query = "DELETE FROM Restaurant r WHERE r.id=:id"),
-        @NamedQuery(name = Restaurant.ALL_SORTED, query = "SELECT r FROM Restaurant r ORDER BY r.votes DESC")
+        @NamedQuery(name = Restaurant.ALL_SORTED, query = "SELECT r FROM Restaurant r ORDER BY r.votedUsers.size DESC")
 })
 @Entity
 @Table(name = "restaurants")
@@ -21,12 +22,11 @@ public class Restaurant extends BaseEntity {
     @NotBlank
     private String name;
 
-    @Column(name = "votes", nullable = false)
-    @NotNull
-    private Integer votes;
-
     @OneToMany(fetch = FetchType.EAGER, mappedBy="restaurantId")
     protected List<Dish> dishes;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy="votedRestaurantId")
+    protected Set<User> votedUsers;
 
     public Restaurant() {
     }
@@ -35,7 +35,6 @@ public class Restaurant extends BaseEntity {
         super(id);
         this.name = name;
         this.dishes = dishes;
-        this.votes = 0;
     }
 
     public String getName() {
@@ -46,19 +45,19 @@ public class Restaurant extends BaseEntity {
         this.name = name;
     }
 
-    public Integer getVotes() {
-        return votes;
-    }
-
-    public void setVotes(Integer votes) {
-        this.votes = votes;
-    }
-
     public List<Dish> getDishes() {
         return dishes;
     }
 
     public void setDishes(List<Dish> dishes) {
         this.dishes = dishes;
+    }
+
+    public Set<User> getVotedUsers() {
+        return votedUsers;
+    }
+
+    public void setVotedUsers(Set<User> votedUsers) {
+        this.votedUsers = votedUsers;
     }
 }

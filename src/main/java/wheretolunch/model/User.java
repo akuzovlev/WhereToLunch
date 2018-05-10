@@ -3,7 +3,7 @@ package wheretolunch.model;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import java.time.LocalDateTime;
+import javax.validation.constraints.NotNull;
 
 @NamedQueries({
         @NamedQuery(name = User.DELETE, query = "DELETE FROM User u WHERE u.id=:id"),
@@ -34,11 +34,8 @@ public class User extends BaseEntity {
     @NotBlank
     private String password;
 
-    @Column(name = "votetime")
-    private LocalDateTime voteTime;
-
-    @Column(name = "voterestaurantid")
-    private Integer voteRestaurantId;
+    @Column(name = "votedrestaurantid")
+    private Integer votedRestaurantId;
 
     public User() {
     }
@@ -90,19 +87,11 @@ public class User extends BaseEntity {
         this.password = password;
     }
 
-    public LocalDateTime getVoteTime() {
-        return voteTime;
+    public Integer getVotedRestaurantId() {
+        return votedRestaurantId;
     }
 
-    public void setVoteTime(LocalDateTime voteTime) {
-        this.voteTime = voteTime;
-    }
-
-    public Integer getVoteRestaurantId() {
-        return voteRestaurantId;
-    }
-
-    public void setVoteRestaurantId(Integer voteRestaurantId) {
-        this.voteRestaurantId = voteRestaurantId;
+    public void setVotedRestaurantId(Integer voteRestaurantId) {
+        this.votedRestaurantId = voteRestaurantId;
     }
 }

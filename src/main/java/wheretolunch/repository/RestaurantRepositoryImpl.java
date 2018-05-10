@@ -44,4 +44,5 @@ public class RestaurantRepositoryImpl implements RestaurantRepository {
     public List<Restaurant> getAll() {
         return em.createNamedQuery(Restaurant.ALL_SORTED, Restaurant.class).getResultList();
     }
+
 }

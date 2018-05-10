@@ -12,8 +12,7 @@ CREATE TABLE users
   name     VARCHAR                 NOT NULL,
   email    VARCHAR                 NOT NULL,
   password VARCHAR                 NOT NULL,
-  votetime TIMESTAMP               ,
-  voterestaurantid INTEGER         ,
+  votedrestaurantid INTEGER         ,
   admin    BOOL DEFAULT FALSE       NOT NULL
 );
 CREATE UNIQUE INDEX users_unique_email_idx
@@ -21,8 +20,7 @@ CREATE UNIQUE INDEX users_unique_email_idx
 
 CREATE TABLE restaurants (
   id INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
-  name     VARCHAR                 NOT NULL,
-  votes   INTEGER DEFAULT 0
+  name     VARCHAR                 NOT NULL
 );
 
 CREATE TABLE dishes (
