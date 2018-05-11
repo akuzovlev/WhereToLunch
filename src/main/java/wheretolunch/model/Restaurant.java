@@ -25,7 +25,7 @@ public class Restaurant extends BaseEntity {
     @OneToMany(fetch = FetchType.EAGER, mappedBy="restaurantId")
     protected List<Dish> dishes;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy="votedRestaurantId")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy="votedRestaurantId")
     protected Set<User> votedUsers;
 
     public Restaurant() {

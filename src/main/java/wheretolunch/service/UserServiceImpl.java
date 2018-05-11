@@ -59,7 +59,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public boolean vote(int id) throws NotFoundException {
         UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User user = userPrincipal.getUser();
+        User user = repository.get(userPrincipal.getUser().getId());
         LocalDateTime eleven = LocalDateTime.of(LocalDate.now(), LocalTime.of(11, 0));
         if (user.getVotedRestaurantId() == null || LocalDateTime.now().isBefore(eleven)) {
             user.setVotedRestaurantId(id);
