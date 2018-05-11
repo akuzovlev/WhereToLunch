@@ -55,5 +55,14 @@ public class UserRestController extends HttpServlet {
         return ResponseEntity.created(uriOfNewResource).body(created);
     }
 
+    @PostMapping(value = "/vote/{id}")
+    public String vote(@PathVariable("id") int id) throws NotFoundException {
+        if (userService.vote(id)) {
+            return "forward:/";
+        } else {
+            return "forward:voteError";
+        }
+    }
+
 
 }

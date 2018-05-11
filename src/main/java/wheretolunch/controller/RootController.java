@@ -47,14 +47,7 @@ public class RootController extends HttpServlet {
     }
 
 
-    @PostMapping(value = "/vote/{id}")
-    public String vote(@PathVariable("id") int id) throws NotFoundException {
-        if (userService.vote(id)) {
-            return "redirect:/";
-        } else {
-            return "voteError";
-        }
-    }
+
 
 }
 

@@ -25,8 +25,12 @@ public class RestaurantRestController extends HttpServlet {
     private RestaurantService restaurantService;
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Restaurant> root() {
-        return restaurantService.getAll();
+    public ResponseEntity<List<Restaurant>> getAll() {
+        List<Restaurant> restaurants = restaurantService.getAll();
+        if (restaurants.isEmpty()) {
+            return new ResponseEntity<List<Restaurant>>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<List<Restaurant>>(restaurants, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
@@ -54,6 +58,12 @@ public class RestaurantRestController extends HttpServlet {
                 .buildAndExpand(created.getId()).toUri();
 
         return ResponseEntity.created(uriOfNewResource).body(created);
+    }
+
+    // Convert a predefined exception to an HTTP Status code
+    @ResponseStatus(value = HttpStatus.NOT_FOUND, reason = "Value not found")
+    @ExceptionHandler(NotFoundException.class)
+    public void notFound() {
     }
 
 }

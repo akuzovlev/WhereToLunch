@@ -15,14 +15,28 @@ Each restaurant provides new menu each day.
 
 API documentation and couple curl commands to test it:
 
+--------------------Avaliable for all logged users-------------------
+
 Get:
 /restaurants  -  JSON with all restaurants
+/restaurants/{id} - get restaurant by id
+
+/users/vote/{id} - vote for restaurant with id
+
+--------------------Avaliable for admin users-------------------
+
+Get:
+/users - JSON with all users
+/users/{id} - get user by id
 
 Delete:
 /restaurants/{id} - delete by restaurant id
+/users/{id} - delete user by id
 
-Update:
+Update(Put):
 /restaurants/{id} - consumes JSON, updates restaurant by id
+/users/{id} - consumes JSON, updates user by id
 
-Save:
-/restaurants/consumes JSON, creates restaurant
+Create(post):
+/restaurants/{id}  -  consumes JSON, creates restaurant
+/users/{id} - consumes JSON, creates user 
