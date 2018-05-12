@@ -1,5 +1,6 @@
 package wheretolunch.service;
 
+import javassist.NotFoundException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +40,7 @@ public class RestaurantServiceImplTest {
     }
 
     @Test
-    public void update() {
+    public void update() throws NotFoundException {
         Restaurant r = RESTAURANT1;
         r.setName("gggggggg");
         service.update(r);

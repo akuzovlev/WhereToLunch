@@ -4,11 +4,11 @@ import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
+import wheretolunch.Util.ExistsException;
 import wheretolunch.model.Restaurant;
 import wheretolunch.repository.RestaurantRepository;
 
 import java.util.List;
-
 
 
 @Service("restaurantService")
@@ -24,6 +24,9 @@ public class RestaurantServiceImpl implements RestaurantService {
     @Override
     public Restaurant create(Restaurant restaurant) {
         Assert.notNull(restaurant, "restaurant must not be null");
+        if (repository.get(restaurant.getId()) != null) {
+            throw new ExistsException("Restaurant with this id already exists");
+        }
         return repository.save(restaurant);
     }
 
@@ -44,8 +47,11 @@ public class RestaurantServiceImpl implements RestaurantService {
     }
 
     @Override
-    public void update(Restaurant restaurant) {
+    public void update(Restaurant restaurant) throws NotFoundException {
         Assert.notNull(restaurant, "restaurant must not be null");
+        if (repository.get(restaurant.getId()) == null) {
+            throw new NotFoundException("Restaurant with id = " + restaurant.getId() + " not found!");
+        }
         repository.save(restaurant);
     }
 

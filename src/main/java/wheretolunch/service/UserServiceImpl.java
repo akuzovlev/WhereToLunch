@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
+import wheretolunch.Util.ExistsException;
 import wheretolunch.model.User;
 import wheretolunch.model.UserPrincipal;
 import wheretolunch.repository.UserRepository;
@@ -31,18 +32,27 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public User create(User user) {
         Assert.notNull(user, "user must not be null");
+        if (repository.get(user.getId()) != null) {
+            throw new ExistsException("User with this id already exists");
+        }
         return repository.save(user);
     }
 
 
     @Override
     public void delete(int id) throws NotFoundException {
-        repository.delete(id);
+        if (!repository.delete(id)) {
+            throw new NotFoundException("User with id = " + id + " not found!");
+        }
     }
 
     @Override
     public User get(int id) throws NotFoundException {
-        return repository.get(id);
+        User user = repository.get(id);
+        if (user == null) {
+            throw new NotFoundException("User with id = " + id + " not found!");
+        }
+        return user;
     }
 
     @Override
@@ -51,8 +61,11 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public void update(User user) {
+    public void update(User user) throws NotFoundException {
         Assert.notNull(user, "user must not be null");
+        if (repository.get(user.getId()) == null) {
+            throw new NotFoundException("Restaurant with id = " + user.getId() + " not found!");
+        }
         repository.save(user);
     }
 
@@ -82,7 +95,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         if (user == null) {
             throw new UsernameNotFoundException("User " + email + " is not found");
         }
-
         return new UserPrincipal(user);
     }
 }

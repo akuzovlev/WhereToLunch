@@ -8,6 +8,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import wheretolunch.Util.ExistsException;
 import wheretolunch.model.Restaurant;
 import wheretolunch.service.RestaurantService;
 
@@ -45,18 +46,17 @@ public class RestaurantRestController extends HttpServlet {
     }
 
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void update(@RequestBody Restaurant restaurant) {
+    public void update(@RequestBody Restaurant restaurant, @PathVariable("id") int id) throws NotFoundException {
+        restaurant.setId(id);
         restaurantService.update(restaurant);
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Restaurant> create(@RequestBody Restaurant restaurant) {
         Restaurant created = restaurantService.create(restaurant);
-
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(REST_URL + "/{id}")
                 .buildAndExpand(created.getId()).toUri();
-
         return ResponseEntity.created(uriOfNewResource).body(created);
     }
 
@@ -64,6 +64,11 @@ public class RestaurantRestController extends HttpServlet {
     @ResponseStatus(value = HttpStatus.NOT_FOUND, reason = "Value not found")
     @ExceptionHandler(NotFoundException.class)
     public void notFound() {
+    }
+
+    @ResponseStatus(value = HttpStatus.CONFLICT, reason = "Value already exists")
+    @ExceptionHandler(ExistsException.class)
+    public void exists() {
     }
 
 }

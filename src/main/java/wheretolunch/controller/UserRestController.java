@@ -7,6 +7,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import wheretolunch.Util.ExistsException;
 import wheretolunch.model.User;
 import wheretolunch.service.UserService;
 
@@ -24,8 +25,12 @@ public class UserRestController extends HttpServlet {
     private UserService userService;
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<User> users() {
-        return userService.getAll();
+    public ResponseEntity<List<User>> users() {
+        List<User> users = userService.getAll();
+        if (users.isEmpty()) {
+            return new ResponseEntity<List<User>>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<List<User>>(users, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
@@ -40,29 +45,39 @@ public class UserRestController extends HttpServlet {
     }
 
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void update(@RequestBody User restaurant) {
-        userService.update(restaurant);
+    public void update(@RequestBody User user, @PathVariable("id") int id) throws NotFoundException {
+        user.setId(id);
+        userService.update(user);
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<User> create(@RequestBody User restaurant) {
-        User created = userService.create(restaurant);
-
+    public ResponseEntity<User> create(@RequestBody User user) {
+        User created = userService.create(user);
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(REST_URL + "/{id}")
                 .buildAndExpand(created.getId()).toUri();
-
         return ResponseEntity.created(uriOfNewResource).body(created);
     }
 
-    @PostMapping(value = "/vote/{id}")
-    public String vote(@PathVariable("id") int id) throws NotFoundException {
+    @PutMapping(value = "/vote/{id}")
+    public ResponseEntity<Void> vote(@PathVariable("id") int id) throws NotFoundException {
         if (userService.vote(id)) {
-            return "forward:/";
+            return new ResponseEntity<>(HttpStatus.OK);
         } else {
-            return "forward:voteError";
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
+
+    // Convert a predefined exception to an HTTP Status code
+    @ResponseStatus(value = HttpStatus.NOT_FOUND, reason = "Value not found")
+    @ExceptionHandler(NotFoundException.class)
+    public void notFound() {
+    }
+
+    @ResponseStatus(value = HttpStatus.CONFLICT, reason = "Value already exists")
+    @ExceptionHandler(ExistsException.class)
+    public void exists() {
+    }
 
 }

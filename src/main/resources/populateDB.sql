@@ -14,18 +14,18 @@ INSERT INTO restaurants (name) VALUES
 
 
 INSERT INTO dishes (description, price, restaurant_id) VALUES
-  ('Fresh melon fruit salad', 2.30, 1002),
-  ('Zucchini light soup', 5.14, 1002),
-  ('Asparagus frittata', 7.14, 1002),
-  ('Baked apple', 1.04, 1002),
-  ('Green tea', 0.60, 1002),
+  ('Fresh melon fruit salad', 230, 1002),
+  ('Zucchini light soup', 514, 1002),
+  ('Asparagus frittata', 714, 1002),
+  ('Baked apple', 104, 1002),
+  ('Green tea', 060, 1002),
 
-  ('salad', 1.30, 1003),
-  ('soup', 2.14, 1003),
-  ('frittata', 3.14, 1003),
-  ('ice-cream', 2.04, 1003),
-  ('tea', 1.60, 1003),
+  ('salad', 130, 1003),
+  ('soup', 214, 1003),
+  ('frittata', 314, 1003),
+  ('ice-cream', 204, 1003),
+  ('tea', 160, 1003),
 
-  ('Fish soup', 2.14, 1004),
-  ('Meatballs with baked potato', 3.14, 1004),
-  ('Kompot', 1.60, 1004);
+  ('Fish soup', 214, 1004),
+  ('Meatballs with baked potato', 314, 1004),
+  ('Kompot', 160, 1004);

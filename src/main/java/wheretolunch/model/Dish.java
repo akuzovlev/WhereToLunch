@@ -20,7 +20,7 @@ public class Dish extends BaseEntity {
 
     @Column(name = "price", nullable = false)
     @NotNull
-    private double price;
+    private Integer price;
 
     @Column(name = "restaurant_id", nullable = false)
     @NotNull
@@ -30,7 +30,7 @@ public class Dish extends BaseEntity {
     public Dish() {
     }
 
-    public Dish(String description, double price, Integer restaurantId) {
+    public Dish(String description, Integer price, Integer restaurantId) {
         this.description = description;
         this.price = price;
         this.restaurantId = restaurantId;
@@ -44,11 +44,11 @@ public class Dish extends BaseEntity {
         this.description = description;
     }
 
-    public double getPrice() {
+    public Integer getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(Integer price) {
         this.price = price;
     }
 

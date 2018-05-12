@@ -13,30 +13,33 @@ A voting system for deciding where to have lunch.
 
 Each restaurant provides new menu each day.
 
+Prices is returned in cents!
+
 API documentation and couple curl commands to test it:
 
 --------------------Avaliable for all logged users-------------------
 
 Get:
-/restaurants  -  JSON with all restaurants
-/restaurants/{id} - get restaurant by id
+/restaurants  -  JSON with all restaurants or NOT_FOUND(404) if list is empty.
+/restaurants/{id} - restaurant with id in JSON format or NOT_FOUND(404) if restaurant with id is not exists.
 
-/users/vote/{id} - vote for restaurant with id
+Put:
+/users/vote/{id} - vote for restaurant with id. Returns OK(200) on success or BAD_REQUEST(400) if user try vote repeatedly after 11 a.m. 
 
 --------------------Avaliable for admin users-------------------
 
 Get:
-/users - JSON with all users
-/users/{id} - get user by id
+/users - JSON with all users or NOT_FOUND(404) if list is empty.
+/users/{id} - user with id in JSON format or NOT_FOUND(404) if user with id is not exists.
 
 Delete:
-/restaurants/{id} - delete by restaurant id
-/users/{id} - delete user by id
+/restaurants/{id} - delete restaurant by id. Returns NO_CONTENT(204) on success or NOT_FOUND(404) if restaurant with id is not exists.
+/users/{id} - delete user by id. Returns NO_CONTENT(204) on success or NOT_FOUND(404) if user with id is not exists.
 
 Update(Put):
-/restaurants/{id} - consumes JSON, updates restaurant by id
-/users/{id} - consumes JSON, updates user by id
+/restaurants/{id} - consumes JSON, updates restaurant by id. Id in JSON is no matter. It will be automatically replaced by id from path. Returns OK(200) on success or NOT_FOUND(404) if restaurant with id is not exists.
+/users/{id} - consumes JSON, updates user by id. Id in JSON is no matter. It will be automatically replaced by id from path. Returns OK(200) on success or NOT_FOUND(404) if user with id is not exists.
 
 Create(post):
-/restaurants/{id}  -  consumes JSON, creates restaurant
-/users/{id} - consumes JSON, creates user 
+/restaurants/{id}  -  consumes JSON, creates restaurant. Returns CREATED(201) and JSON with created record or CONFLICT(409) if restaurant with this id is already exists.
+/users/{id} - consumes JSON, creates user. Returns CREATED(201) and JSON with created record or CONFLICT(409) if user with this id is already exists.

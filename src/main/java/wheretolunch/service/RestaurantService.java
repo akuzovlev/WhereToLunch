@@ -17,7 +17,7 @@ public interface RestaurantService {
     Restaurant get(int id) throws NotFoundException;
 
     @Secured({"ROLE_ADMIN"})
-    void update(Restaurant restaurant);
+    void update(Restaurant restaurant) throws NotFoundException;
 
     List<Restaurant> getAll();
 
