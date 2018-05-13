@@ -11,6 +11,7 @@ import org.springframework.util.Assert;
 import wheretolunch.Util.ExistsException;
 import wheretolunch.model.User;
 import wheretolunch.model.UserPrincipal;
+import wheretolunch.repository.HistoryRecordRepository;
 import wheretolunch.repository.UserRepository;
 
 import java.time.LocalDate;
@@ -22,10 +23,12 @@ import java.util.List;
 public class UserServiceImpl implements UserService, UserDetailsService {
 
     private final UserRepository repository;
+    private final HistoryRecordRepository historyRecordRepository;
 
     @Autowired
-    public UserServiceImpl(UserRepository repository) {
+    public UserServiceImpl(UserRepository repository, HistoryRecordRepository historyRecordRepository) {
         this.repository = repository;
+        this.historyRecordRepository = historyRecordRepository;
     }
 
 

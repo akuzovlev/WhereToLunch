@@ -1,6 +1,8 @@
 package wheretolunch.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -9,7 +11,7 @@ import java.util.Set;
 
 @NamedQueries({
         @NamedQuery(name = Restaurant.DELETE, query = "DELETE FROM Restaurant r WHERE r.id=:id"),
-        @NamedQuery(name = Restaurant.ALL_SORTED, query = "SELECT r FROM Restaurant r ORDER BY r.votedUsers.size DESC")
+        @NamedQuery(name = Restaurant.ALL_SORTED, query = "SELECT r FROM Restaurant r ORDER BY r.name DESC")
 })
 @Entity
 @Table(name = "restaurants")
@@ -25,7 +27,8 @@ public class Restaurant extends BaseEntity {
     @OneToMany(fetch = FetchType.EAGER, mappedBy="restaurantId")
     protected List<Dish> dishes;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy="votedRestaurantId")
+    @JsonIgnore
+    @OneToMany(fetch = FetchType.LAZY, mappedBy="votedRestaurantId")
     protected Set<User> votedUsers;
 
     public Restaurant() {

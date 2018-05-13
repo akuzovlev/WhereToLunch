@@ -30,3 +30,10 @@ CREATE TABLE dishes (
   price      INTEGER       NOT NULL,
   FOREIGN KEY (restaurant_id) REFERENCES restaurants (id) ON DELETE CASCADE
 );
+
+CREATE TABLE historyrecords (
+  id INTEGER PRIMARY KEY,
+  datetime TIMESTAMP NOT NULL,
+  record     VARCHAR                 NOT NULL,
+  type VARCHAR NOT NULL
+);

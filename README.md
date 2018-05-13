@@ -20,7 +20,7 @@ API documentation and couple curl commands to test it:
 --------------------Avaliable for all logged users-------------------
 
 Get:
-/restaurants  -  JSON with all restaurants or NOT_FOUND(404) if list is empty.
+/restaurants  -  JSON with all restaurants sorted by name or NOT_FOUND(404) if list is empty.
 /restaurants/{id} - restaurant with id in JSON format or NOT_FOUND(404) if restaurant with id is not exists.
 
 Put:
@@ -29,7 +29,7 @@ Put:
 --------------------Avaliable for admin users-------------------
 
 Get:
-/users - JSON with all users or NOT_FOUND(404) if list is empty.
+/users - JSON with all users sorted by name or NOT_FOUND(404) if list is empty.
 /users/{id} - user with id in JSON format or NOT_FOUND(404) if user with id is not exists.
 
 Delete:

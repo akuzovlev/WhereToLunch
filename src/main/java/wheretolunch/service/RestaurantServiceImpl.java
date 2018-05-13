@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import wheretolunch.Util.ExistsException;
 import wheretolunch.model.Restaurant;
+import wheretolunch.repository.HistoryRecordRepository;
 import wheretolunch.repository.RestaurantRepository;
 
 import java.util.List;
@@ -15,10 +16,12 @@ import java.util.List;
 public class RestaurantServiceImpl implements RestaurantService {
 
     private final RestaurantRepository repository;
+    private final HistoryRecordRepository historyRecordRepository;
 
     @Autowired
-    public RestaurantServiceImpl(RestaurantRepository repository) {
+    public RestaurantServiceImpl(RestaurantRepository repository, HistoryRecordRepository historyRecordRepository) {
         this.repository = repository;
+        this.historyRecordRepository = historyRecordRepository;
     }
 
     @Override
