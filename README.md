@@ -1,6 +1,6 @@
 # WhereToLunch
 
-A voting system for deciding where to have lunch.
+##A voting system for deciding where to have lunch.
 
 - 2 types of users: admin and regular users 
 - Admin can input a restaurant and it's lunch menu of the day (2-5 items usually, just a dish name and price) 
@@ -15,42 +15,39 @@ Each restaurant provides new menu each day.
 
 Prices is returned in cents!
 
-API documentation and couple curl commands to test it:
+###API documentation and couple curl commands to test it:
 
---------------------Avaliable for all logged users-------------------
+######Avaliable for all logged users
 
-Get:
+* Get:
 
-/restaurants  -  JSON with all restaurants sorted by name or NOT_FOUND(404) if list is empty.
-curl -u user@yandex.ru:password http://localhost:8080/restaurants
+    * /restaurants  -  JSON with all restaurants sorted by name or NOT_FOUND(404) if list is empty.
+curl -u user@yandex.ru:password http://localhost:8080/restaurants.
+    * /restaurants/{id} - restaurant with id in JSON format or NOT_FOUND(404) if restaurant with id is not exists.
+curl -u user@yandex.ru:password http://localhost:8080/restaurants/1002.
 
-/restaurants/{id} - restaurant with id in JSON format or NOT_FOUND(404) if restaurant with id is not exists.
-curl -u user@yandex.ru:password http://localhost:8080/restaurants/1002
-
-Put:
-
-/users/vote/{id} - vote for restaurant with id. Returns OK(200) on success or BAD_REQUEST(400) if user try vote repeatedly after 11 a.m. 
+* Put:
+    * /users/vote/{id} - vote for restaurant with id. Returns OK(200) on success or BAD_REQUEST(400) if user try vote repeatedly after 11 a.m. 
 curl -i -X PUT -u user@yandex.ru:password http://localhost:8080/users/vote/1002
 
---------------------Avaliable for admin users-------------------
+######Avaliable for admin users
 
-Get:
-/users - JSON with all users sorted by name or NOT_FOUND(404) if list is empty.
-/users/{id} - user with id in JSON format or NOT_FOUND(404) if user with id is not exists.
-/users/votehistory - JSON with Votes history ordered by vote date
-/restaurants/history - JSON with restaurants change history ordered by change date
-/restaurants/{id}/withvotes  - restaurant with id in JSON format with voted users list or NOT_FOUND(404) if restaurant with id is not exists.
-/restaurants/withvotes  -  JSON with all restaurants (each with voted users list) sorted by name or NOT_FOUND(404) if list is empty.
+* Get:
+    * /users - JSON with all users sorted by name or NOT_FOUND(404) if list is empty.
+    * /users/{id} - user with id in JSON format or NOT_FOUND(404) if user with id is not exists.
+    * /users/votehistory - JSON with Votes history ordered by vote date
+    * /restaurants/history - JSON with restaurants change history ordered by change date
+    * /restaurants/{id}/withvotes  - restaurant with id in JSON format with voted users list or NOT_FOUND(404) if restaurant with id is not exists.
+    * /restaurants/withvotes  -  JSON with all restaurants (each with voted users list) sorted by name or NOT_FOUND(404) if list is empty.
 
+* Delete:
+    * /restaurants/{id} - delete restaurant by id. Returns NO_CONTENT(204) on success or NOT_FOUND(404) if restaurant with id is not exists.
+    * /users/{id} - delete user by id. Returns NO_CONTENT(204) on success or NOT_FOUND(404) if user with id is not exists.
 
-Delete:
-/restaurants/{id} - delete restaurant by id. Returns NO_CONTENT(204) on success or NOT_FOUND(404) if restaurant with id is not exists.
-/users/{id} - delete user by id. Returns NO_CONTENT(204) on success or NOT_FOUND(404) if user with id is not exists.
+* Update(Put):
+    * /restaurants/{id} - consumes JSON, updates restaurant by id. Id in JSON is no matter. It will be automatically replaced by id from path. Returns OK(200) on success or NOT_FOUND(404) if restaurant with id is not exists.
+    * /users/{id} - consumes JSON, updates user by id. Id in JSON is no matter. It will be automatically replaced by id from path. Returns OK(200) on success or NOT_FOUND(404) if user with id is not exists.
 
-Update(Put):
-/restaurants/{id} - consumes JSON, updates restaurant by id. Id in JSON is no matter. It will be automatically replaced by id from path. Returns OK(200) on success or NOT_FOUND(404) if restaurant with id is not exists.
-/users/{id} - consumes JSON, updates user by id. Id in JSON is no matter. It will be automatically replaced by id from path. Returns OK(200) on success or NOT_FOUND(404) if user with id is not exists.
-
-Create(post):
-/restaurants  -  consumes JSON, creates restaurant. Returns CREATED(201) and JSON with created record or CONFLICT(409) if restaurant with this id is already exists.
-/users - consumes JSON, creates user. Returns CREATED(201) and JSON with created record or CONFLICT(409) if user with this id or email is already exists.
+* Create(post):
+    * /restaurants  -  consumes JSON, creates restaurant. Returns CREATED(201) and JSON with created record or CONFLICT(409) if restaurant with this id is already exists.
+    * /users - consumes JSON, creates user. Returns CREATED(201) and JSON with created record or CONFLICT(409) if user with this id or email is already exists.
