@@ -18,8 +18,8 @@ public class HistoryRecordRepositoryImpl implements HistoryRecordRepository {
     @Override
     @Transactional
     public HistoryRecord save(HistoryRecord historyRecord) {
-            em.persist(historyRecord);
-            return historyRecord;
+        em.persist(historyRecord);
+        return historyRecord;
     }
 
     @Override
@@ -28,7 +28,7 @@ public class HistoryRecordRepositoryImpl implements HistoryRecordRepository {
     }
 
     @Override
-    public List<HistoryRecord> getRestaurantMenuHistory() {
+    public List<HistoryRecord> getRestaurantsHistory() {
         return em.createNamedQuery(HistoryRecord.MENU_HISTORY_SORTED, HistoryRecord.class).getResultList();
     }
 }

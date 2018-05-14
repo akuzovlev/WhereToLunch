@@ -52,4 +52,11 @@ public class Dish extends BaseEntity {
         this.price = price;
     }
 
+    @Override
+    public String toString() {
+        return "Dish{" +
+                "description='" + description + '\'' +
+                ", price=" + price +
+                '}';
+    }
 }

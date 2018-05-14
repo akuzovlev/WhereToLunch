@@ -12,7 +12,7 @@ import java.util.List;
 
 @Repository
 @Transactional(readOnly = true)
-public class UserRepositoryImpl implements UserRepository{
+public class UserRepositoryImpl implements UserRepository {
 
     @PersistenceContext
     private EntityManager em;
@@ -54,7 +54,6 @@ public class UserRepositoryImpl implements UserRepository{
                 .setParameter("id", id)
                 .executeUpdate() != 0;
     }
-
 
 
 }

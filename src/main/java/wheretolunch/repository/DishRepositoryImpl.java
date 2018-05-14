@@ -16,7 +16,6 @@ public class DishRepositoryImpl implements DishRepository {
     @PersistenceContext
     private EntityManager em;
 
-
     @Override
     @Transactional
     public Dish save(Dish dish) {

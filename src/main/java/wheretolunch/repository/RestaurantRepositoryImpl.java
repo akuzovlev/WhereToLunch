@@ -4,6 +4,8 @@ package wheretolunch.repository;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import wheretolunch.model.Restaurant;
+import wheretolunch.model.RestaurantVotedNotIncluded;
+import wheretolunch.model.RestaurantWithVotedUsers;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -29,20 +31,30 @@ public class RestaurantRepositoryImpl implements RestaurantRepository {
 
     @Override
     public Restaurant get(Integer id) {
-        return em.find(Restaurant.class, id);
+        return em.find(RestaurantWithVotedUsers.class, id);
     }
 
     @Override
     @Transactional
     public boolean delete(Integer id) {
-        return em.createNamedQuery(Restaurant.DELETE)
+        return em.createNamedQuery(RestaurantWithVotedUsers.DELETE)
                 .setParameter("id", id)
                 .executeUpdate() != 0;
     }
 
     @Override
     public List<Restaurant> getAll() {
-        return em.createNamedQuery(Restaurant.ALL_SORTED, Restaurant.class).getResultList();
+        return em.createNamedQuery(RestaurantWithVotedUsers.ALL_SORTED, Restaurant.class).getResultList();
+    }
+
+    @Override
+    public List<Restaurant> getAllWithoutVotes() {
+        return em.createNamedQuery(RestaurantVotedNotIncluded.ALL_SORTED, Restaurant.class).getResultList();
+    }
+
+    @Override
+    public Restaurant getWithoutVotes(Integer id) {
+        return em.find(RestaurantVotedNotIncluded.class, id);
     }
 
 }

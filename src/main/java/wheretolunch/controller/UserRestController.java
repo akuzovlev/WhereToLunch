@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import wheretolunch.Util.ExistsException;
+import wheretolunch.model.HistoryRecord;
 import wheretolunch.model.User;
 import wheretolunch.service.UserService;
 
@@ -60,12 +61,17 @@ public class UserRestController extends HttpServlet {
     }
 
     @PutMapping(value = "/vote/{id}")
-    public ResponseEntity<Void> vote(@PathVariable("id") int id) throws NotFoundException {
+    public ResponseEntity<String> vote(@PathVariable("id") int id) throws NotFoundException {
         if (userService.vote(id)) {
-            return new ResponseEntity<>(HttpStatus.OK);
+            return new ResponseEntity<>("Vote is successful", HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("You can't change your mind after 11 a.m.", HttpStatus.BAD_REQUEST);
         }
+    }
+
+    @GetMapping("/votehistory")
+    public List<HistoryRecord> getHistory() {
+        return userService.getVotesHistory();
     }
 
 

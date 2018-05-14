@@ -31,6 +31,11 @@ Put:
 Get:
 /users - JSON with all users sorted by name or NOT_FOUND(404) if list is empty.
 /users/{id} - user with id in JSON format or NOT_FOUND(404) if user with id is not exists.
+/users/votehistory - JSON with Votes history ordered by vote date
+/restaurants/history - JSON with restaurants change history ordered by change date
+/restaurants/{id}/withvotes  - restaurant with id in JSON format with voted users list or NOT_FOUND(404) if restaurant with id is not exists.
+/restaurants/withvotes  -  JSON with all restaurants (each with voted users list) sorted by name or NOT_FOUND(404) if list is empty.
+
 
 Delete:
 /restaurants/{id} - delete restaurant by id. Returns NO_CONTENT(204) on success or NOT_FOUND(404) if restaurant with id is not exists.

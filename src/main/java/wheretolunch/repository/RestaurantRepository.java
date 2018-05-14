@@ -17,4 +17,7 @@ public interface RestaurantRepository {
 
     List<Restaurant> getAll();
 
+    List<Restaurant> getAllWithoutVotes();
+
+    Restaurant getWithoutVotes(Integer id);
 }

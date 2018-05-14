@@ -1,6 +1,7 @@
 package wheretolunch.service;
 
 import javassist.NotFoundException;
+import wheretolunch.model.HistoryRecord;
 import wheretolunch.model.User;
 
 import java.util.List;
@@ -18,6 +19,8 @@ public interface UserService {
     List<User> getAll();
 
     boolean vote(int id) throws NotFoundException;
+
+    List<HistoryRecord> getVotesHistory();
 
     User getByEmail(String email) throws NotFoundException;
 }

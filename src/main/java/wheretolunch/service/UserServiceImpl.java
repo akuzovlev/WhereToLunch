@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import wheretolunch.Util.ExistsException;
+import wheretolunch.model.HistoryRecord;
 import wheretolunch.model.User;
 import wheretolunch.model.UserPrincipal;
 import wheretolunch.repository.HistoryRecordRepository;
@@ -73,13 +74,14 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public boolean vote(int id) throws NotFoundException {
+    public boolean vote(int id) {
         UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = repository.get(userPrincipal.getUser().getId());
         LocalDateTime eleven = LocalDateTime.of(LocalDate.now(), LocalTime.of(11, 0));
         if (user.getVotedRestaurantId() == null || LocalDateTime.now().isBefore(eleven)) {
             user.setVotedRestaurantId(id);
             repository.save(user);
+            historyRecordRepository.save(new HistoryRecord(LocalDateTime.now().withNano(0), "Vote: " + user.toString(), "user"));
             return true;
         } else {
             return false;
@@ -87,7 +89,13 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public User getByEmail(String email) throws NotFoundException {
+    public List<HistoryRecord> getVotesHistory() {
+        return historyRecordRepository.getUserVotesHistory();
+    }
+
+
+    @Override
+    public User getByEmail(String email) {
         Assert.notNull(email, "email must not be null");
         return repository.getByEmail(email);
     }

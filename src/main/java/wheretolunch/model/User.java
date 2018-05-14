@@ -94,4 +94,13 @@ public class User extends BaseEntity {
     public void setVotedRestaurantId(Integer voteRestaurantId) {
         this.votedRestaurantId = voteRestaurantId;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "email='" + email + '\'' +
+                ", name='" + name + '\'' +
+                ", votedRestaurantId=" + votedRestaurantId +
+                '}';
+    }
 }

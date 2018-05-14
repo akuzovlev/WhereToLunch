@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import wheretolunch.Util.ExistsException;
+import wheretolunch.model.HistoryRecord;
 import wheretolunch.model.Restaurant;
 import wheretolunch.service.RestaurantService;
 
@@ -25,7 +26,7 @@ public class RestaurantRestController extends HttpServlet {
     @Autowired
     private RestaurantService restaurantService;
 
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/withvotes", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Restaurant>> getAll() {
         List<Restaurant> restaurants = restaurantService.getAll();
         if (restaurants.isEmpty()) {
@@ -36,6 +37,11 @@ public class RestaurantRestController extends HttpServlet {
 
     @GetMapping("/{id}")
     public Restaurant get(@PathVariable("id") int id) throws NotFoundException {
+        return restaurantService.getWithoutVotes(id);
+    }
+
+    @GetMapping("/{id}/withvotes")
+    public Restaurant getWithVotes(@PathVariable("id") int id) throws NotFoundException {
         return restaurantService.get(id);
     }
 
@@ -58,6 +64,21 @@ public class RestaurantRestController extends HttpServlet {
                 .path(REST_URL + "/{id}")
                 .buildAndExpand(created.getId()).toUri();
         return ResponseEntity.created(uriOfNewResource).body(created);
+    }
+
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<Restaurant>> getAllWithoutVotes() {
+        List<Restaurant> restaurants = restaurantService.getAllWithoutVotes();
+        if (restaurants.isEmpty()) {
+            return new ResponseEntity<List<Restaurant>>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<List<Restaurant>>(restaurants, HttpStatus.OK);
+    }
+
+
+    @GetMapping("/history")
+    public List<HistoryRecord> getHistory() {
+        return restaurantService.getRestaurantsHistory();
     }
 
     // Convert a predefined exception to an HTTP Status code

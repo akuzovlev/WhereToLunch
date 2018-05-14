@@ -8,8 +8,7 @@ public interface HistoryRecordRepository {
 
     HistoryRecord save(HistoryRecord restaurant);
 
-
     List<HistoryRecord> getUserVotesHistory();
 
-    List<HistoryRecord> getRestaurantMenuHistory();
+    List<HistoryRecord> getRestaurantsHistory();
 }
