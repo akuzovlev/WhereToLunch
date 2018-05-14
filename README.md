@@ -20,11 +20,17 @@ API documentation and couple curl commands to test it:
 --------------------Avaliable for all logged users-------------------
 
 Get:
+
 /restaurants  -  JSON with all restaurants sorted by name or NOT_FOUND(404) if list is empty.
+curl -u user@yandex.ru:password http://localhost:8080/restaurants
+
 /restaurants/{id} - restaurant with id in JSON format or NOT_FOUND(404) if restaurant with id is not exists.
+curl -u user@yandex.ru:password http://localhost:8080/restaurants/1002
 
 Put:
+
 /users/vote/{id} - vote for restaurant with id. Returns OK(200) on success or BAD_REQUEST(400) if user try vote repeatedly after 11 a.m. 
+curl -i -X PUT -u user@yandex.ru:password http://localhost:8080/users/vote/1002
 
 --------------------Avaliable for admin users-------------------
 
@@ -46,5 +52,5 @@ Update(Put):
 /users/{id} - consumes JSON, updates user by id. Id in JSON is no matter. It will be automatically replaced by id from path. Returns OK(200) on success or NOT_FOUND(404) if user with id is not exists.
 
 Create(post):
-/restaurants/{id}  -  consumes JSON, creates restaurant. Returns CREATED(201) and JSON with created record or CONFLICT(409) if restaurant with this id is already exists.
-/users/{id} - consumes JSON, creates user. Returns CREATED(201) and JSON with created record or CONFLICT(409) if user with this id is already exists.
+/restaurants  -  consumes JSON, creates restaurant. Returns CREATED(201) and JSON with created record or CONFLICT(409) if restaurant with this id is already exists.
+/users - consumes JSON, creates user. Returns CREATED(201) and JSON with created record or CONFLICT(409) if user with this id or email is already exists.

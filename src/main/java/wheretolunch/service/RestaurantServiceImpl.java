@@ -31,7 +31,7 @@ public class RestaurantServiceImpl implements RestaurantService {
     @Override
     public Restaurant create(Restaurant restaurant) {
         Assert.notNull(restaurant, "restaurant must not be null");
-        if (repository.get(restaurant.getId()) != null) {
+        if (restaurant.getId() != null && repository.get(restaurant.getId()) != null) {
             throw new ExistsException("Restaurant with this id already exists");
         }
         historyRecordRepository.save(new HistoryRecord(LocalDateTime.now().withNano(0), "Created: " + restaurant.toString(), "restaurant"));
@@ -40,10 +40,11 @@ public class RestaurantServiceImpl implements RestaurantService {
 
     @Override
     public void delete(int id) throws NotFoundException {
+        Restaurant restaurant = repository.get(id);
         if (!repository.delete(id)) {
             throw new NotFoundException("Restaurant with id = " + id + " not found!");
         }
-        historyRecordRepository.save(new HistoryRecord(LocalDateTime.now().withNano(0), "Deleted: " + repository.get(id).toString(), "restaurant"));
+        historyRecordRepository.save(new HistoryRecord(LocalDateTime.now().withNano(0), "Deleted: " + restaurant.toString(), "restaurant"));
     }
 
     @Override

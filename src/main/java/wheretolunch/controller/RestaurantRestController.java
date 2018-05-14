@@ -11,6 +11,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import wheretolunch.Util.ExistsException;
 import wheretolunch.model.HistoryRecord;
 import wheretolunch.model.Restaurant;
+import wheretolunch.model.RestaurantWithVotedUsers;
 import wheretolunch.service.RestaurantService;
 
 import javax.servlet.http.HttpServlet;
@@ -52,13 +53,13 @@ public class RestaurantRestController extends HttpServlet {
     }
 
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void update(@RequestBody Restaurant restaurant, @PathVariable("id") int id) throws NotFoundException {
+    public void update(@RequestBody RestaurantWithVotedUsers restaurant, @PathVariable("id") int id) throws NotFoundException {
         restaurant.setId(id);
         restaurantService.update(restaurant);
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Restaurant> create(@RequestBody Restaurant restaurant) {
+    public ResponseEntity<Restaurant> create(@RequestBody RestaurantWithVotedUsers restaurant) {
         Restaurant created = restaurantService.create(restaurant);
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(REST_URL + "/{id}")

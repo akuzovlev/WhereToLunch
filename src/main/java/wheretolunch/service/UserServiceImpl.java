@@ -36,7 +36,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public User create(User user) {
         Assert.notNull(user, "user must not be null");
-        if (repository.get(user.getId()) != null) {
+        if ((user.getId() != null && repository.get(user.getId()) != null) || repository.getByEmail(user.getEmail()) != null) {
             throw new ExistsException("User with this id already exists");
         }
         return repository.save(user);
