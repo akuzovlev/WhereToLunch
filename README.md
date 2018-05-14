@@ -17,7 +17,7 @@ Prices is returned in cents!
 
 ### API documentation and couple curl commands to test it:
 
-###### Avaliable for all logged users
+##### Avaliable for all logged users
 
 * Get:
 
@@ -30,7 +30,7 @@ curl -u user@yandex.ru:password http://localhost:8080/restaurants/1002.
     * /users/vote/{id} - vote for restaurant with id. Returns OK(200) on success or BAD_REQUEST(400) if user try vote repeatedly after 11 a.m. 
 curl -i -X PUT -u user@yandex.ru:password http://localhost:8080/users/vote/1002
 
-###### Avaliable for admin users
+##### Avaliable for admin users
 
 * Get:
     * /users - JSON with all users sorted by name or NOT_FOUND(404) if list is empty.
